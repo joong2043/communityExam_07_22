@@ -1,9 +1,13 @@
 package com.ll.exam;
 
+import com.ll.exam.article.dto.ArticleDto;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Rq {
     private final HttpServletRequest req;
@@ -34,4 +38,20 @@ public class Rq {
     }
 
 
+    public void setAttr(String articles, List<ArticleDto> articleDtos) {
+        req.setAttribute(articles,articleDtos);
+    }
+
+    public void view(String s) {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/"+s+".jsp");
+
+        try {
+            requestDispatcher.forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
